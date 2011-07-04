@@ -48,9 +48,9 @@ Msg *MsgSuperviser::allocMsgContainer()
 	return ptr;
 }
 
-void MsgSuperviser::setFree(void *msg)
+void MsgSuperviser::setFree(Msg *msg)
 {
-	Msg *ptr=(Msg *)msg;
+	Msg *ptr=msg;
 	// mutex down
 	pthread_mutex_lock(&mutex);
 	vfree.push_back(ptr);
@@ -69,7 +69,7 @@ void MsgSuperviser::setFree(void *msg)
 
 
 
-Msg::Msg(AbstructSuperviser *msv)
+Msg::Msg(MsgSuperviser *msv)
 {
 	// Msg knows its superviser
 	sv=msv;

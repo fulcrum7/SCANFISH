@@ -11,12 +11,7 @@
 #define STATUS_OK 0
 
 
-class AbstructSuperviser
-{
-	public:
-	virtual void setFree(void *)=0;
-};
-
+class MsgSuperviser;
 
 
 class Msg 
@@ -25,9 +20,9 @@ class Msg
     unsigned int dlc;
     unsigned char data[8];
     int status;     //  Any errors in frames?
-    AbstructSuperviser *sv;
+    MsgSuperviser *sv;
 public:
-     Msg(AbstructSuperviser *msv);
+     Msg(MsgSuperviser *msv);
 
     // accessors
     int setID(unsigned int mid);
@@ -45,7 +40,7 @@ public:
 
 
 
-class MsgSuperviser : public AbstructSuperviser
+class MsgSuperviser
 {
 	// mutex
 	pthread_mutex_t mutex;
@@ -57,7 +52,7 @@ public:
 	MsgSuperviser();
 	~MsgSuperviser();
 	Msg *allocMsgContainer();
-	void setFree(void *msg);
+	void setFree(Msg *msg);
 
 };
 
