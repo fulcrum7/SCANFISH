@@ -1,0 +1,144 @@
+#include "canio.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+#include <net/if.h>
+#include <sys/ioctl.h>
+
+#include <linux/can.h>
+#include <linux/can/raw.h>
+
+
+CanIO::CanIO(int bitrate,const char *interface)
+{
+	// bitrate fo future use
+        strcpy(name,interface);	
+}
+
+
+SocketCanIO::SocketCanIO(const char *mname) : CanIO(0,mname)
+{
+
+
+	// for future use
+
+}
+
+int SocketCanIO::connect()
+{
+
+
+        struct sockaddr_can addr;
+        struct ifreq ifr;
+
+	// SOCKET FOR READING
+	/* open socket */
+        if ((sdr = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
+	{
+                perror("socket");
+                return 1;
+        }
+	addr.can_family = AF_CAN;
+
+        strcpy(ifr.ifr_name, name);
+        if (ioctl(sdr, SIOCGIFINDEX, &ifr) < 0)
+	{
+                perror("SIOCGIFINDEX");
+                return 1;
+        }
+        addr.can_ifindex = ifr.ifr_ifindex;
+
+
+        if (bind(sdr, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+	{
+                perror("bind");
+                return 1;
+        }
+	// SOCKET FOR WRITING
+	/* open socket */	
+        if ((sdw = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0)
+	{
+                perror("socket");
+                return 1;
+        }
+	addr.can_family = AF_CAN;
+
+        strcpy(ifr.ifr_name, name);
+        if (ioctl(sdw, SIOCGIFINDEX, &ifr) < 0)
+	{
+                perror("SIOCGIFINDEX");
+                return 1;
+        }
+        addr.can_ifindex = ifr.ifr_ifindex;
+
+
+        if (bind(sdw, (struct sockaddr *)&addr, sizeof(addr)) < 0)
+	{
+                perror("bind");
+                return 1;
+        }
+	return 0;
+}
+
+int SocketCanIO::disconnect()
+{
+
+        close(sdw);
+        close(sdr);
+	return 0;
+}
+
+int SocketCanIO::send(Msg *msg)
+{
+
+        struct can_frame frame;
+	int nbytes;
+	int i;
+	frame.can_id=msg->getID();
+	frame.can_dlc=msg->getDlc();
+	for(i=0;i<frame.can_dlc;i++)
+	{
+		frame.data[i]=msg->getData(i);
+	}	
+        if ((nbytes = write(sdw, &frame, sizeof(frame))) != sizeof(frame))
+	{
+                perror("write");
+                return 1;
+        }
+	return 0;
+}
+int SocketCanIO::receive(Msg *msg)
+{
+        struct can_frame frame;
+	int nbytes;
+	int i;
+	if ((nbytes = read(sdr, &frame, sizeof(frame))) != sizeof(frame))
+	{
+		perror("write");
+		return 1;
+	}
+
+	msg->setID(frame.can_id);
+	msg->setDlc(frame.can_dlc);
+	for(i=0;i<frame.can_dlc;i++)
+	{
+		msg->setData(i,frame.data[i]);
+	}
+	// debugging
+	printf("CAN FRAME: ID: %d DLC: %d DATA: ",frame.can_id,frame.can_dlc);
+	for(i=0;i<frame.can_dlc;i++)
+	{
+		printf("%X",frame.data[i]);
+	}
+	printf("\n");	
+	// debugging
+	return 0;
+}
+
+
+
+
+
+

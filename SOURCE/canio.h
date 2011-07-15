@@ -7,10 +7,11 @@
 
 class CanIO
 {
+protected:
     int bitrate;
     char name[INTERFACE_NAME_SIZE];
 public:
-    CanIO(int bitrate,char *interface);
+    CanIO(int bitrate,const char *interface);
     virtual   int connect()=0;
     virtual   int disconnect()=0;
     virtual   int send(Msg *msg)=0;
@@ -21,9 +22,10 @@ public:
 
 class SocketCanIO : public CanIO
 {
-    //...
+	int sdw;	// socket descriptor write
+	int sdr;	// socket descriptor read
 public:
-    SocketCanIO();
+    SocketCanIO(const char *name);
     int connect();
     int disconnect();
     int send(Msg *msg);
