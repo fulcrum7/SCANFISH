@@ -107,16 +107,18 @@ int SocketCanIO::send(Msg *msg)
                 perror("write");
                 return 1;
         }
+	msg->setMsgFree();
 	return 0;
 }
 int SocketCanIO::receive(Msg *msg)
 {
         struct can_frame frame;
+	msg=msv.allocMsgContainer();
 	int nbytes;
 	int i;
 	if ((nbytes = read(sdr, &frame, sizeof(frame))) != sizeof(frame))
 	{
-		perror("write");
+		perror("read");
 		return 1;
 	}
 

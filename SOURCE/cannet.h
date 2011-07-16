@@ -6,6 +6,7 @@
 #include "canio.h"
 #include <queue>
 #include <semaphore.h>
+#include <pthread.h>
 
 // Should implement buffer between network and software
 class MsgQueue
@@ -28,12 +29,16 @@ private:
     CanIO *canio;
     MsgQueue rqueue; //reading queue
     MsgQueue wqueue; //writing queue
+    pthread_t listenerThread;
+    pthread_t writerThread;
 public:
     CanNet(CanIO *mcanio);
     int start();
     int stop();
-    void readingthread(void);
-    void writingthread(void);
+    static void *readingthread(void *unused);
+    static void *writingthread(void *unused);
+    virtual void reading();
+    virtual void writing();
     int write(Msg *msg);
     int read(Msg *msg);
 };

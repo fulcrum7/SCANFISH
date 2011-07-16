@@ -10,6 +10,7 @@ class CanIO
 protected:
     int bitrate;
     char name[INTERFACE_NAME_SIZE];
+    MsgSuperviser msv;
 public:
     CanIO(int bitrate,const char *interface);
     virtual   int connect()=0;

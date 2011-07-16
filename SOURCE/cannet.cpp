@@ -1,5 +1,85 @@
 #include "cannet.h"
 #include<stdio.h>
+#include <unistd.h>
+
+
+
+/*******************************************************************************
+*				CanNet
+*******************************************************************************/
+ CanNet::CanNet(CanIO *mcanio)
+{
+	canio=mcanio;
+	start();
+
+}
+int CanNet::start()
+{
+	pthread_create(&listenerThread,NULL,CanNet::readingthread,this);
+	pthread_create(&writerThread,NULL,CanNet::writingthread,this);
+	return 0;
+}
+int CanNet::stop()
+{
+	// nothing to do yet
+
+}
+void *CanNet::readingthread(void *unused)
+{	
+	((CanNet*)unused)->reading();
+	
+
+}
+void *CanNet::writingthread(void *unused)
+{
+	((CanNet*)unused)->writing();
+}
+
+void CanNet::reading()
+{
+	Msg *msg;
+	while(1)
+	{
+		canio->receive(msg);
+		rqueue.put(msg);
+	        // NOTIFY THE LISTENER
+	        // listener->notify();
+	}
+}
+void CanNet::writing()
+{
+	Msg *msg;
+	while(1)
+	{
+		msg=wqueue.get();
+		printf("There is smth in Queue");
+		canio->send(msg);
+	}	
+
+}
+
+
+int CanNet::write(Msg *msg)
+{
+	wqueue.put(msg);
+
+}
+int CanNet::read(Msg *msg)
+{
+	msg=rqueue.get();
+
+}
+
+
+/*******************************************************************************
+*				MsgQueue
+*******************************************************************************/
+
+
+
+
+
+
 
 MsgQueue::MsgQueue()
 {
