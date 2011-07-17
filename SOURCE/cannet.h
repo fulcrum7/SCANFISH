@@ -7,6 +7,10 @@
 #include <queue>
 #include <semaphore.h>
 #include <pthread.h>
+#include "canlistener.h"
+
+
+class CanListener;
 
 // Should implement buffer between network and software
 class MsgQueue
@@ -31,8 +35,11 @@ private:
     MsgQueue wqueue; //writing queue
     pthread_t listenerThread;
     pthread_t writerThread;
+    CanListener *lstn;
+
 public:
-    CanNet(CanIO *mcanio);
+    CanNet(CanIO *mcanio,CanListener *mlstn);
+    ~CanNet();
     int start();
     int stop();
     static void *readingthread(void *unused);

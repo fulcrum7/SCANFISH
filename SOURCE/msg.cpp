@@ -42,9 +42,12 @@ Msg *MsgSuperviser::allocMsgContainer()
 		valloc.push_back(ptr);
 	}
 	// mutex up
+//	printf("Pointer:%p\n",this);
+//	printf("VFREE = %d \n",vfree.size());
+//	printf("VALLOC = %d \n",valloc.size());
 	pthread_mutex_unlock(&mutex);
-	printf("VFREE = %d \n",vfree.size());
-	printf("VALLOC = %d \n",valloc.size());
+
+
 	return ptr;
 }
 
@@ -54,8 +57,9 @@ void MsgSuperviser::setFree(Msg *msg)
 	// mutex down
 	pthread_mutex_lock(&mutex);
 	vfree.push_back(ptr);
-	printf("VFREE = %d \n",vfree.size());
-	printf("VALLOC = %d \n",valloc.size());
+//	printf("Pointer freeing:%p\n",this);
+//	printf("VFREE = %d \n",vfree.size());
+//	printf("VALLOC = %d \n",valloc.size());
 	// mutex up
 	pthread_mutex_unlock(&mutex);
 }

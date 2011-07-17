@@ -7,21 +7,30 @@
 /*******************************************************************************
 *				CanNet
 *******************************************************************************/
- CanNet::CanNet(CanIO *mcanio)
+ CanNet::CanNet(CanIO *mcanio,CanListener *mlstn)
 {
 	canio=mcanio;
-	start();
+	lstn=mlstn;	
 
 }
+
+ CanNet::~CanNet()
+{
+	delete canio;
+
+}
+
 int CanNet::start()
 {
+	canio->connect();
 	pthread_create(&listenerThread,NULL,CanNet::readingthread,this);
 	pthread_create(&writerThread,NULL,CanNet::writingthread,this);
 	return 0;
 }
 int CanNet::stop()
 {
-	// nothing to do yet
+	pthread_cancel(listenerThread);
+	pthread_cancel(writerThread);
 
 }
 void *CanNet::readingthread(void *unused)
@@ -44,7 +53,9 @@ void CanNet::reading()
 		rqueue.put(msg);
 	        // NOTIFY THE LISTENER
 	        // listener->notify();
+		lstn->notify(msg);
 	}
+	pthread_exit(NULL);
 }
 void CanNet::writing()
 {
@@ -55,7 +66,7 @@ void CanNet::writing()
 		printf("There is smth in Queue");
 		canio->send(msg);
 	}	
-
+	pthread_exit(NULL);
 }
 
 
