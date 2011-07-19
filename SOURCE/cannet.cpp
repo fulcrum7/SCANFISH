@@ -31,6 +31,7 @@ int CanNet::stop()
 {
 	pthread_cancel(listenerThread);
 	pthread_cancel(writerThread);
+	return 0;
 
 }
 void *CanNet::readingthread(void *unused)
@@ -63,7 +64,7 @@ void CanNet::writing()
 	while(1)
 	{
 		msg=wqueue.get();
-		printf("There is smth in Queue");
+		//printf("There is smth in Queue");
 		canio->send(msg);
 	}	
 	pthread_exit(NULL);
@@ -73,11 +74,13 @@ void CanNet::writing()
 int CanNet::write(Msg *msg)
 {
 	wqueue.put(msg);
+	return 0;
 
 }
-int CanNet::read(Msg *msg)
+int CanNet::read(Msg **msg)
 {
-	msg=rqueue.get();
+	*msg=rqueue.get();
+	return 0;
 
 }
 

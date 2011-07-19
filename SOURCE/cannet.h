@@ -47,7 +47,7 @@ public:
     virtual void reading();
     virtual void writing();
     int write(Msg *msg);
-    int read(Msg *msg);
+    int read(Msg **msg);
 };
 
 

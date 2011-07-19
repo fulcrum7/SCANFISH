@@ -13,7 +13,7 @@ MsgSuperviser::MsgSuperviser()
 MsgSuperviser::~MsgSuperviser()
 {
 	// free all allocated resources
-	int i;
+	unsigned int i;
 
 	for(i=0;i<valloc.size();i++)
 		delete valloc[i];

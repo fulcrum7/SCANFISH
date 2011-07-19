@@ -129,12 +129,12 @@ int SocketCanIO::receive(Msg **msg)
 		(*msg)->setData(i,frame.data[i]);
 	}
 	// debugging
-	printf("CAN FRAME: ID: %d DLC: %d DATA: ",frame.can_id,frame.can_dlc);
+	/*printf("CAN FRAME: ID: %d DLC: %d DATA: ",frame.can_id,frame.can_dlc);
 	for(i=0;i<frame.can_dlc;i++)
 	{
 		printf("%X",frame.data[i]);
 	}
-	printf("\n");	
+	printf("\n");	*/
 	// debugging
 	return 0;
 }

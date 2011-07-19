@@ -27,7 +27,7 @@ public:
 int    connect(int bitrate,const char *interface, CanListener *lstn);
 int    disconnect(int netid);// destroys Net
 int    send(Msg *msg,int netid);      // is used by GUI to send frames
-int    receive(Msg *msg,int netid);   // is used by GUI to receive frames
+int    receive(Msg **msg,int netid);   // is used by GUI to receive frames
 Msg *allocMsg();
 };
 

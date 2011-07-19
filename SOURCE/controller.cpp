@@ -30,16 +30,19 @@ int    Controller::disconnect(int netid)
 	//TODO: using map and netid find exact CanNet
 	cannet->stop();
 	delete cannet;
+	return 0;
 }
 int    Controller::send(Msg *msg,int netid)
 {
 	//TODO: using map and netid find exact CanNet
 	cannet->write(msg);
+	return 0;
 }
-int    Controller::receive(Msg *msg,int netid)
+int    Controller::receive(Msg **msg,int netid)
 {
 	//TODO: using map and netid find exact CanNet
 	cannet->read(msg);
+	return 0;
 
 }
 

@@ -30,7 +30,7 @@ public:
     int connect();
     int disconnect();
     int send(Msg *msg);
-    int receive(Msg **msg);
+    int receive(Msg **msg); 
 };
 
 #endif	/* CANIO_H */
