@@ -16,7 +16,7 @@ public:
     virtual   int connect()=0;
     virtual   int disconnect()=0;
     virtual   int send(Msg *msg)=0;
-    virtual   int receive(Msg *msg)=0;
+    virtual   int receive(Msg **msg)=0;
 
 };
 
@@ -30,7 +30,7 @@ public:
     int connect();
     int disconnect();
     int send(Msg *msg);
-    int receive(Msg *msg);
+    int receive(Msg **msg);
 };
 
 #endif	/* CANIO_H */

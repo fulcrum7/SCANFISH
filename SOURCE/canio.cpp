@@ -110,10 +110,10 @@ int SocketCanIO::send(Msg *msg)
 	msg->setMsgFree();
 	return 0;
 }
-int SocketCanIO::receive(Msg *msg)
+int SocketCanIO::receive(Msg **msg)
 {
         struct can_frame frame;
-	msg=msv.allocMsgContainer();
+	(*msg)=msv.allocMsgContainer();
 	int nbytes;
 	int i;
 	if ((nbytes = read(sdr, &frame, sizeof(frame))) != sizeof(frame))
@@ -122,11 +122,11 @@ int SocketCanIO::receive(Msg *msg)
 		return 1;
 	}
 
-	msg->setID(frame.can_id);
-	msg->setDlc(frame.can_dlc);
+	(*msg)->setID(frame.can_id);
+	(*msg)->setDlc(frame.can_dlc);
 	for(i=0;i<frame.can_dlc;i++)
 	{
-		msg->setData(i,frame.data[i]);
+		(*msg)->setData(i,frame.data[i]);
 	}
 	// debugging
 	printf("CAN FRAME: ID: %d DLC: %d DATA: ",frame.can_id,frame.can_dlc);

@@ -17,12 +17,13 @@ public:
 	{
 
 	}
-	int notify(Msg *msg)
+	int notify()
 	{
 		printf("Notification is received!\n");
+		
 		return 0;
 	}
-	int errorInNet()
+	int errorInNet(const char *str)
 	{
 		return 0;
 	}

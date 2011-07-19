@@ -11,8 +11,8 @@ private:
 
 public:
 
-	virtual int notify(Msg *msg)=0;
-	virtual int errorInNet()=0;
+	virtual int notify()=0;
+	virtual int errorInNet(const char *str)=0;
 
 
 };

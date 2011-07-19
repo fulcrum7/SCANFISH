@@ -49,11 +49,11 @@ void CanNet::reading()
 	Msg *msg;
 	while(1)
 	{
-		canio->receive(msg);
+		canio->receive(&msg);
 		rqueue.put(msg);
 	        // NOTIFY THE LISTENER
 	        // listener->notify();
-		lstn->notify(msg);
+		lstn->notify();
 	}
 	pthread_exit(NULL);
 }
