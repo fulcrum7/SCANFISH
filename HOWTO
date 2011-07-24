@@ -1,0 +1,45 @@
+HOT TO ...
+
+1. Add new gadget support
+2. Make another user experience
+3. Turn on SocketCan Virtual CAN
+
+
+
+*******************************************************************************
+Add new gadget support
+
+Please look at the architecture.jpg picture that could be found in SCREENSHOTS.
+As you can see ScanFish is made the way that adding new type of supported 
+gadgets means reimplementing of CanIO class. Likewise we did with SocketCan.
+Top classes use the interface of CanIO and so shouldn't know anything about
+talking with drivers.
+
+
+*******************************************************************************
+Make another user experience
+
+Please look at main.cpp.
+ 
+In general you should implement CanListener class and use Controller class to
+send/receive frames. Controller is a facade. 
+
+*******************************************************************************
+Turn on SocketCan Virtual CAN
+
+
+Your Linux kernel should support such feature.
+If not, rebuild it with vcan driver.
+
+then do following commands as a root:
+
+# modprobe vcan
+# ip link add type vcan
+# ip link add dev can0 type vcan
+# ifconfig can0 up
+
+We are ready to use vcan.
+
+So type 
+$ ./sf can0
+when you build ScanFish in sources.
