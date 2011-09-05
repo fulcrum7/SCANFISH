@@ -1,11 +1,20 @@
 #include "controller.h"
 
-
+Controller *Controller::singleton = NULL;
 
 Controller::Controller()
 {
 	//	for the future use
 
+}
+
+Controller *Controller::getController()
+{
+	if(singleton==NULL)
+	{
+		singleton=new Controller();
+	}
+	return singleton;
 }
 
 int Controller::connect(int bitrate,const char *interface,CanListener *lstn)
@@ -16,9 +25,9 @@ int Controller::connect(int bitrate,const char *interface,CanListener *lstn)
 	SocketCanIO *sc=new SocketCanIO(interface);
 	// create cannet
 	// TODO: add it to map and create network ID
-	cannet= new CanNet(sc,lstn);
+	singleton->cannet= new CanNet(sc,lstn);
 	//  threads start
-	if(cannet->start()<0)
+	if(singleton->cannet->start()<0)
 	{
 		return -1;
 	}
@@ -30,22 +39,22 @@ int Controller::connect(int bitrate,const char *interface,CanListener *lstn)
 int    Controller::disconnect(int netid)
 {
 	//TODO: using map and netid find exact CanNet
-	cannet->stop();
-	delete cannet;
+	singleton->cannet->stop();
+	delete singleton->cannet;
 	return 0;
 }
 
 int    Controller::send(Msg *msg,int netid)
 {
 	//TODO: using map and netid find exact CanNet
-	cannet->write(msg);
+	singleton->cannet->write(msg);
 	return 0;
 }
 
 int    Controller::receive(Msg **msg,int netid)
 {
 	//TODO: using map and netid find exact CanNet
-	cannet->read(msg);
+	singleton->cannet->read(msg);
 	return 0;
 
 }
@@ -53,6 +62,6 @@ int    Controller::receive(Msg **msg,int netid)
 
 Msg *Controller::allocMsg()
 {
-	return msv.allocMsgContainer();
+	return singleton->msv.allocMsgContainer();
 
 }

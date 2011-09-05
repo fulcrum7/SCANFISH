@@ -40,6 +40,9 @@
 */
 
 
+
+
+
 #define NETID 1
 #define BITRATE 1000000
 
@@ -138,8 +141,9 @@ int main(int argc, char** argv)
 		printf("Please, input the interface\n ./sf can0\n");
 		exit(-1);
 	}
-	Controller cnt;
-	GUI gui(&cnt);
+	Controller *cnt;
+	cnt=Controller::getController();
+	GUI gui(cnt);
 	gui.connect(*(argv+1));
 	pthread_t sending_thread;
 	pthread_create(&sending_thread,NULL,do_sending,&gui);

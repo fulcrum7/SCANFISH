@@ -19,10 +19,12 @@ class Controller
 private:
     CanNet *cannet; // should be replaced with map with several CanNet
     MsgSuperviser msv; // for msg allocation
-public:
+	static Controller *singleton; // for Singleton template
+private:
     Controller();
-
+public:
 // connect() creates new Net and couples it with I/O class, returns NetID
+static Controller *getController();
 int    connect(int bitrate,const char *interface, CanListener *lstn);
 int    disconnect(int netid);// destroys Net
 int    send(Msg *msg,int netid);      // is used by GUI to send frames
