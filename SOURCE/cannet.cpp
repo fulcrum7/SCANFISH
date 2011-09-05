@@ -22,27 +22,33 @@
 
 int CanNet::start()
 {
-	canio->connect();
+	if(canio->connect()!=0)
+	{
+		lstn->errorInNet("Socket error\n");
+		return -1;
+	}
 	pthread_create(&listenerThread,NULL,CanNet::readingthread,this);
 	pthread_create(&writerThread,NULL,CanNet::writingthread,this);
 	return 0;
 }
+
 int CanNet::stop()
 {
+	canio->disconnect();
 	pthread_cancel(listenerThread);
 	pthread_cancel(writerThread);
 	return 0;
 
 }
-void *CanNet::readingthread(void *unused)
+void *CanNet::readingthread(void *obj_ptr)
 {	
-	((CanNet*)unused)->reading();
+	((CanNet*)obj_ptr)->reading();
 	
 
 }
-void *CanNet::writingthread(void *unused)
+void *CanNet::writingthread(void *obj_ptr)
 {
-	((CanNet*)unused)->writing();
+	((CanNet*)obj_ptr)->writing();
 }
 
 void CanNet::reading()

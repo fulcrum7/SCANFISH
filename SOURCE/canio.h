@@ -2,11 +2,13 @@
 #define	CANIO_H
 
 #include "msg.h"
+#include "sferror.h"
 
 #define INTERFACE_NAME_SIZE 15
 
 class CanIO
 {
+
 protected:
     int bitrate;
     char name[INTERFACE_NAME_SIZE];
@@ -23,6 +25,8 @@ public:
 
 class SocketCanIO : public CanIO
 {
+
+private:
 	int sdw;	// socket descriptor write
 	int sdr;	// socket descriptor read
 public:
@@ -31,6 +35,7 @@ public:
     int disconnect();
     int send(Msg *msg);
     int receive(Msg **msg); 
+
 };
 
 #endif	/* CANIO_H */

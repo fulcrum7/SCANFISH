@@ -38,13 +38,10 @@ Msg *MsgSuperviser::allocMsgContainer()
 	{
 		// we should allocate new container
 		ptr= new Msg(this);
-		// add container to allocated resources
+		// add container to the allocated resources
 		valloc.push_back(ptr);
 	}
 	// mutex up
-//	printf("Pointer:%p\n",this);
-//	printf("VFREE = %d \n",vfree.size());
-//	printf("VALLOC = %d \n",valloc.size());
 	pthread_mutex_unlock(&mutex);
 
 
@@ -57,9 +54,6 @@ void MsgSuperviser::setFree(Msg *msg)
 	// mutex down
 	pthread_mutex_lock(&mutex);
 	vfree.push_back(ptr);
-//	printf("Pointer freeing:%p\n",this);
-//	printf("VFREE = %d \n",vfree.size());
-//	printf("VALLOC = %d \n",valloc.size());
 	// mutex up
 	pthread_mutex_unlock(&mutex);
 }
@@ -82,6 +76,10 @@ Msg::Msg(MsgSuperviser *msv)
 
 int Msg::setID(unsigned int mid)
 {
+	if(mid>0x1FFFFFFF)
+	{
+		return WRONG_ID;
+	}
 	id=mid;
 	return 0;
 }
@@ -93,6 +91,10 @@ unsigned int Msg::getID()
 
 int Msg::setDlc(unsigned int mdlc)
 {
+	if(mdlc>8)
+	{
+		return WRONG_DLC;
+	}
 	dlc=mdlc;
 	return 0;
 }

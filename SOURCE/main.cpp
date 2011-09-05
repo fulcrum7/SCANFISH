@@ -55,7 +55,8 @@ public:
 
 	int connect(const char * str)
 	{
-		cntr->connect(BITRATE,str,this);
+		if(cntr->connect(BITRATE,str,this)==-1)
+		exit(0);
 	}
 
 	int disconnect()
@@ -71,6 +72,7 @@ public:
 
 	int errorInNet(const char *str)
 	{
+		printf("ERROR: %s\n",str);
 		return 0;
 	}
 

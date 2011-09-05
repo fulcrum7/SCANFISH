@@ -5,7 +5,7 @@
 
 #include <vector>
 #include <pthread.h>
-
+#include "sferror.h"
 
 
 #define STATUS_OK 0
@@ -16,11 +16,14 @@ class MsgSuperviser;
 
 class Msg 
 {
+
+private:
     unsigned int id; // should be 32 bit 
     unsigned int dlc;
     unsigned char data[8];
-    int status;     //  Any errors in frames?
-    MsgSuperviser *sv;
+    int status;     //  any errors in frames? for the future use
+    MsgSuperviser *sv; // looks for the Msg resources
+
 public:
      Msg(MsgSuperviser *msv);
 
@@ -33,7 +36,7 @@ public:
     unsigned char getData(unsigned int num);
     int getStatus();
     void setStatus(int st);
-    //	set this Msg container as free
+    //	set this Msg container  free
     void setMsgFree();
 
 };

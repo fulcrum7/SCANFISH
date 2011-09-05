@@ -15,20 +15,19 @@
 
 class Controller
 {
-private:
 
-    CanNet *cannet; // replace with map
+private:
+    CanNet *cannet; // should be replaced with map with several CanNet
     MsgSuperviser msv; // for msg allocation
 public:
     Controller();
 
 // connect() creates new Net and couples it with I/O class, returns NetID
-// returns NetID
 int    connect(int bitrate,const char *interface, CanListener *lstn);
 int    disconnect(int netid);// destroys Net
 int    send(Msg *msg,int netid);      // is used by GUI to send frames
 int    receive(Msg **msg,int netid);   // is used by GUI to receive frames
-Msg *allocMsg();
+Msg *allocMsg(); // all Msg objects must be created with this method!!!
 };
 
 
