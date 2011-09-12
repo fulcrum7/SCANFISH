@@ -134,6 +134,7 @@ int SocketCanIO::receive(Msg **msg)
 		//perror("read");
 		return SOCK_READING_ERROR;
 	}
+	(*msg)->fixTime();
 
 	(*msg)->setID(frame.can_id);
 	(*msg)->setDlc(frame.can_dlc);

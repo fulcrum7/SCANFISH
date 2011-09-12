@@ -139,3 +139,18 @@ void Msg::setMsgFree()
 {
 	sv->setFree(this);
 }
+
+
+void Msg::fixTime()
+{
+	 // we don't need time zone
+	gettimeofday(&timestamp,NULL);
+}
+time_t Msg::getTimestampSec()
+{
+	return timestamp.tv_sec;
+}
+int    Msg::getTimestampMS()
+{
+	return timestamp.tv_usec;
+}

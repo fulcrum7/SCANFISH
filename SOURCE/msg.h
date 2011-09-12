@@ -6,7 +6,7 @@
 #include <vector>
 #include <pthread.h>
 #include "sferror.h"
-
+#include "sys/time.h" /* Linux only (Posix functions) */
 
 #define STATUS_OK 0
 
@@ -23,7 +23,7 @@ private:
     unsigned char data[8];
     int status;     //  any errors in frames? for the future use
     MsgSuperviser *sv; // looks for the Msg resources
-
+	struct timeval timestamp;
 public:
      Msg(MsgSuperviser *msv);
 
@@ -38,7 +38,9 @@ public:
     void setStatus(int st);
     //	set this Msg container  free
     void setMsgFree();
-
+	void fixTime();
+	time_t getTimestampSec();
+	int    getTimestampMS();
 };
 
 
