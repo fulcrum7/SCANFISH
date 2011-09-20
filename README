@@ -1,3 +1,10 @@
 Open source software for CAN ( Controller area network ) tracing.
-Project has just started. Any suggestions and help are welcome.
-Please, read more in project WIKI or write me a message.
+Current release is ScanFish 0.1.
+
+Static version of binary ScanFish  should be found in BIN directory. It should work on all Linux systems (tested on Fedora 15). Source code is in SOURCE. Qt version of the ScanFish is developed in NetBeans IDE, so SOURCE is
+actually a Netbeans project.
+
+The work is going on. 
+If you have any suggestions, contact us: 
+mail: scanfishproject@gmail.com
+

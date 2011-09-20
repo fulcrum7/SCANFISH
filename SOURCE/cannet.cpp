@@ -34,9 +34,9 @@ int CanNet::start()
 
 int CanNet::stop()
 {
-	canio->disconnect();
 	pthread_cancel(listenerThread);
 	pthread_cancel(writerThread);
+	canio->disconnect();
 	return 0;
 
 }
