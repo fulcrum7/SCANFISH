@@ -22,7 +22,7 @@ AS=as
 QMAKE=qmake
 
 # Macros
-CND_PLATFORM=GNU_stat-Linux-x86
+CND_PLATFORM=GNU-Linux-x86
 CND_CONF=Release
 CND_DISTDIR=dist
 
@@ -60,7 +60,7 @@ FORCE:
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS} nbproject/qt-${CND_CONF}.mk
-	"${MAKE}" -f nbproject/qt-${CND_CONF}.mk dist/Release/GNU_stat-Linux-x86/QtApplication_1
+	"${MAKE}" -f nbproject/qt-${CND_CONF}.mk dist/Release/GNU-Linux-x86/SOURCE
 
 build/Release/%.o: nbproject/qt-Release.mk
 	$(MAKE) -f nbproject/qt-Release.mk "$@"
