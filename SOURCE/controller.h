@@ -1,11 +1,13 @@
 #ifndef CONTROLLER_H
 #define	CONTROLLER_H
 
+#include <map>
 
 #include "canio.h"
 #include "cannet.h"
 #include "msg.h"
 #include "canlistener.h"
+
 
 
 /*
@@ -30,6 +32,7 @@ int    disconnect(int netid);// destroys Net
 int    send(Msg *msg,int netid);      // is used by GUI to send frames
 int    receive(Msg **msg,int netid);   // is used by GUI to receive frames
 Msg *allocMsg(); // all Msg objects must be created with this method!!!
+int imap;
 };
 
 

@@ -1,10 +1,3 @@
-/* 
- * File:   Connection.h
- * Author: Ira
- *
- * Created on July 12, 2011, 2:29 AM
- */
-
 #ifndef CONNECTION_H
 #define	CONNECTION_H
 
@@ -28,15 +21,14 @@ class Connection : public QWidget
     QHBoxLayout *ConnectionLayout;
 public:
     Connection(QWidget *Con, CanListener *mcanl);
-    signals:
 
+    signals:
     void active();
     void disactive();
 private slots:
     void ConnectClicked();
     void DisconnectClicked();
     void EnableConnectButton();
-
 
 private:
     QLabel *Interface;
@@ -49,7 +41,6 @@ private:
     CanListener *canl;
     QByteArray strInt;
     int push;
-
 };
 
 #endif	/* CONNECTION_H */

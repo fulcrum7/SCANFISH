@@ -4,6 +4,7 @@ Controller *Controller::singleton = NULL;
 
 Controller::Controller()
 {
+    imap=0;
 	//	for the future use
 
 }
@@ -19,13 +20,17 @@ Controller *Controller::getController()
 
 int Controller::connect(int bitrate,const char *interface,CanListener *lstn)
 {
+        std::map <int,CanNet*> netTable;
 	// create low level IO class
 	// TODO: CanIO implementation depends on type of driver
 	// Created object will be deleted by cannet
 	SocketCanIO *sc=new SocketCanIO(interface);
 	// create cannet
 	// TODO: add it to map and create network ID
-	singleton->cannet= new CanNet(sc,lstn);
+
+	netTable[imap]=singleton->cannet= new CanNet(sc,lstn);
+        imap++;
+
 	//  threads start
 	if(singleton->cannet->start()<0)
 	{

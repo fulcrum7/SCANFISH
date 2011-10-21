@@ -1,10 +1,3 @@
-/* 
- * File:   Receive.h
- * Author: Ira
- *
- * Created on July 12, 2011, 2:17 AM
- */
-
 #ifndef RECEIVE_H
 #define	RECEIVE_H
 
@@ -57,7 +50,6 @@ private:
     int k;
     int i;
     int j;
-
 };
 
 

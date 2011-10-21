@@ -1,21 +1,14 @@
-/* 
- * File:   MesEdit.cpp
- * Author: Ira
- * 
- * Created on July 2, 2011, 12:59 AM
- */
-
 #include "MessageEditor.h"
 #include "Transmit.h"
 
 MessageEditor::MessageEditor(QWidget *MesEd,Controller *mContr,
                                 Msg *mGuiMsgContainer) : QGroupBox(MesEd)
 {
-    f=0;
-    GuiMsgContainer=mGuiMsgContainer;
-    Contr=mContr;
+   f=0;
+   GuiMsgContainer=mGuiMsgContainer;
+   Contr=mContr;
 
-    setTitle("    Message Editor");
+   setTitle("    Message Editor");
 
    MesEditLayout = new QGridLayout;
 
@@ -28,7 +21,6 @@ MessageEditor::MessageEditor(QWidget *MesEd,Controller *mContr,
        tLabel_fDATA[i]=new QLabel("");
    SendButton=new QPushButton ("Send");
    SendButton->setFixedSize(95,27);
-
 
    bLabel_ID=new QLabel("ID:",this);
    bLineEdit_ID=new QLineEdit;
@@ -67,21 +59,12 @@ MessageEditor::MessageEditor(QWidget *MesEd,Controller *mContr,
    MesEditLayout->addWidget(fDATA_Widget,1,5,1,8,Qt::AlignLeft);
    MesEditLayout->addWidget(SendButton,1,13,Qt::AlignLeft);
 
-
-
-//   for (i=0;i<8;i++)
-//       tLabel_fDATA[i]->setFixedSize(30,27);
-//   for (i=0;i<8;i++)
-//       MesEditLayout->addWidget(tLabel_fDATA[i],1,i+5,1,1,Qt::AlignLeft);
-//   MesEditLayout->addWidget(SendButton,1,13,Qt::AlignLeft);
-
    MesEditLayout->addWidget(bLabel_ID,2,0,Qt::AlignLeft);
    bLineEdit_ID->setFixedSize(80,27);
    MesEditLayout->addWidget(bLineEdit_ID,2,1,Qt::AlignLeft);
    MesEditLayout->addWidget(bLabel_DLC,2,2,Qt::AlignLeft);
    MesEditLayout->addWidget(DLC_SpinBox,2,3,Qt::AlignLeft);
    MesEditLayout->addWidget(bLabel_DATA,2,4,Qt::AlignLeft);
-
   
    DATA_Widget = new QWidget;
    for (i=0;i<8;i++)
@@ -106,11 +89,6 @@ MessageEditor::MessageEditor(QWidget *MesEd,Controller *mContr,
    QValidator *val = new QIntValidator(0,536870911,this);
    bLineEdit_ID->setValidator(val);
 
- //  QRegExp RegID("[0-9a-fA-F]{9}");
-  // ID_Validator = new QRegExpValidator(RegID,this);
- //  bLineEdit_ID->setValidator(ID_Validator);
-
-
    QRegExp RegDATA("[0-9a-fA-F][0-9a-fA-F]");
    DATA_Validator = new QRegExpValidator(RegDATA,this);
    for(i=0;i<8;i++)
@@ -131,10 +109,6 @@ MessageEditor::MessageEditor(QWidget *MesEd,Controller *mContr,
    for (i=0;i<k;i++)
        connect (bLineEdit_DATA[i], SIGNAL(textChanged(const QString &)),
            this,SLOT(EnableCommitButton()));
-
-   //QString text;
-   //for (i=0;i<k;i++)
-   //    text=text+bLineEdit_DATA[i];
 
    connect (CommitButton, SIGNAL(clicked()),this,SLOT(CommitClicked()));
    connect (SendButton, SIGNAL(clicked()),this,
@@ -171,8 +145,6 @@ void MessageEditor::CommitClicked()
     bLineEdit_ID->setText(text);
     for (i=0;i<8;i++)
        bLineEdit_DATA[i]->setText(text);
-
-    
 }
 
 void MessageEditor :: EnableCommitButton()
@@ -219,10 +191,8 @@ void MessageEditor::ChangeDLC()
        }
        else
        {
-//           tLabel_fDATA[i]->setText("");
            bLineEdit_DATA[i]->setText("");
            bLineEdit_DATA[i]->hide();
-//           tLabel_fDATA[i]->hide();
        }
    };
     emit DLC_TextChanged(k);
@@ -262,7 +232,6 @@ void MessageEditor::setSleep()
 
 void MessageEditor::wakeUp()
 {
-//    CommitButton->setEnabled(true);
     if (f!=0)
         SendButton->setEnabled(true);
 }
