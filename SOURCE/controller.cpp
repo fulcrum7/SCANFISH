@@ -20,7 +20,6 @@ Controller *Controller::getController()
 
 int Controller::connect(int bitrate,const char *interface,CanListener *lstn)
 {
-        std::map <int,CanNet*> netTable;
 	// create low level IO class
 	// TODO: CanIO implementation depends on type of driver
 	// Created object will be deleted by cannet
@@ -28,38 +27,38 @@ int Controller::connect(int bitrate,const char *interface,CanListener *lstn)
 	// create cannet
 	// TODO: add it to map and create network ID
 
-	netTable[imap]=singleton->cannet= new CanNet(sc,lstn);
         imap++;
+	singleton->netTable[imap]= new CanNet(sc,lstn);
 
 	//  threads start
-	if(singleton->cannet->start()<0)
+	if(singleton->netTable[imap]->start()<0)
 	{
 		return -1;
 	}
 	// TODO: use bitrate
 	// TODO: return network ID
-	return 3;
+	return imap;
 }
 
 int    Controller::disconnect(int netid)
 {
 	//TODO: using map and netid find exact CanNet
-	singleton->cannet->stop();
-	delete singleton->cannet;
+	singleton->netTable[imap]->stop();
+	delete singleton->netTable[imap];
 	return 0;
 }
 
 int    Controller::send(Msg *msg,int netid)
 {
 	//TODO: using map and netid find exact CanNet
-	singleton->cannet->write(msg);
+	singleton->netTable[imap]->write(msg);
 	return 0;
 }
 
 int    Controller::receive(Msg **msg,int netid)
 {
 	//TODO: using map and netid find exact CanNet
-	singleton->cannet->read(msg);
+	singleton->netTable[imap]->read(msg);
 	return 0;
 
 }

@@ -19,9 +19,10 @@ class Controller
 {
 
 private:
-    CanNet *cannet; // should be replaced with map with several CanNet
+//    CanNet *cannet; // should be replaced with map with several CanNet
     MsgSuperviser msv; // for msg allocation
 	static Controller *singleton; // for Singleton template
+
 private:
     Controller();
 public:
@@ -32,10 +33,11 @@ int    disconnect(int netid);// destroys Net
 int    send(Msg *msg,int netid);      // is used by GUI to send frames
 int    receive(Msg **msg,int netid);   // is used by GUI to receive frames
 Msg *allocMsg(); // all Msg objects must be created with this method!!!
+
+std::map <int,CanNet*> netTable;
 int imap;
+
 };
-
-
 
 #endif	
 
