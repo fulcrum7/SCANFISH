@@ -4,7 +4,7 @@ Controller *Controller::singleton = NULL;
 
 Controller::Controller()
 {
-    imap=0;
+    netCount=0;
 	//	for the future use
 
 }
@@ -27,38 +27,42 @@ int Controller::connect(int bitrate,const char *interface,CanListener *lstn)
 	// create cannet
 	// TODO: add it to map and create network ID
 
-        imap++;
-	singleton->netTable[imap]= new CanNet(sc,lstn);
+        netCount++;
+        singleton->nettab.insert(std::pair<int,CanNet*>(netCount,new CanNet(sc,lstn)));
+        it=nettab.find(netCount);
 
 	//  threads start
-	if(singleton->netTable[imap]->start()<0)
+        if(singleton->it->second->start()<0)
 	{
 		return -1;
 	}
 	// TODO: use bitrate
 	// TODO: return network ID
-	return imap;
+	return it->first;
 }
 
 int    Controller::disconnect(int netid)
 {
-	//TODO: using map and netid find exact CanNet
-	singleton->netTable[imap]->stop();
-	delete singleton->netTable[imap];
+        it=nettab.find(netid);
+//	//TODO: using map and netid find exact CanNet
+	singleton->it->second->stop();
+	//delete singleton->it->second;
 	return 0;
 }
 
 int    Controller::send(Msg *msg,int netid)
 {
+        it=nettab.find(netid);
 	//TODO: using map and netid find exact CanNet
-	singleton->netTable[imap]->write(msg);
+	singleton->it->second->write(msg);
 	return 0;
 }
 
 int    Controller::receive(Msg **msg,int netid)
 {
+        it=nettab.find(netid);
 	//TODO: using map and netid find exact CanNet
-	singleton->netTable[imap]->read(msg);
+	singleton->it->second->read(msg);
 	return 0;
 
 }

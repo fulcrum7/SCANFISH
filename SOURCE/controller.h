@@ -2,6 +2,7 @@
 #define	CONTROLLER_H
 
 #include <map>
+#include <algorithm>
 
 #include "canio.h"
 #include "cannet.h"
@@ -34,8 +35,10 @@ int    send(Msg *msg,int netid);      // is used by GUI to send frames
 int    receive(Msg **msg,int netid);   // is used by GUI to receive frames
 Msg *allocMsg(); // all Msg objects must be created with this method!!!
 
-std::map <int,CanNet*> netTable;
-int imap;
+typedef std::map <int,CanNet*> netTable;
+netTable::iterator it;
+netTable nettab;
+int netCount;
 
 };
 

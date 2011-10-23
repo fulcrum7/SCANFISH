@@ -41,6 +41,7 @@ private:
     CanListener *canl;
     QByteArray strInt;
     int push;
+    int nid;
 };
 
 #endif	/* CONNECTION_H */

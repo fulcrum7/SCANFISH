@@ -217,7 +217,7 @@ void MessageEditor :: SendSigSl()
     QTime time;
     time=((QDateTime::fromTime_t(msg->getTimestampSec())).time());
     time=time.addMSecs(msg->getTimestampMS()/1000);
-    if((cnt->send(msg,15))==0)
+    if((cnt->send(msg,1))==0)
     {
        emit SendSig(tLabel_fID->text(),tLabel_fDLC->text(), data,time);
     }
