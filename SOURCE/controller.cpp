@@ -47,7 +47,7 @@ int    Controller::disconnect(int netid)
 {
         CanNet *cannet;
         netTable::iterator it;
-        if ((it=nettab.find(netCount))==nettab.end())
+        if ((it=nettab.find(netid))==nettab.end())
         {
             return -1;
         }
@@ -75,7 +75,7 @@ int    Controller::send(Msg *msg,int netid)
 int    Controller::receive(Msg **msg,int netid)
 {
         netTable::iterator it;
-        if ((it=nettab.find(netCount))==nettab.end())
+        if ((it=nettab.find(netid))==nettab.end())
         {
             return -1;
         }
