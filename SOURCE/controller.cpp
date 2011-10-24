@@ -56,13 +56,14 @@ int    Controller::disconnect(int netid)
         cannet=it->second;
         nettab.erase(it);
 	delete cannet;
+        netCount--;
 	return 0;
 }
 
 int    Controller::send(Msg *msg,int netid)
 {
         netTable::iterator it;
-        if ((it=nettab.find(netCount))==nettab.end())
+        if ((it=nettab.find(netid))==nettab.end())
         {
             return -1;
         }
