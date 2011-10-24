@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'Connection.h'
 **
-** Created: Sun Oct 23 03:49:50 2011
+** Created: Sun Oct 23 22:34:23 2011
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.3)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -20,7 +20,6 @@ class Controller
 {
 
 private:
-//    CanNet *cannet; // should be replaced with map with several CanNet
     MsgSuperviser msv; // for msg allocation
 	static Controller *singleton; // for Singleton template
 
@@ -36,7 +35,6 @@ int    receive(Msg **msg,int netid);   // is used by GUI to receive frames
 Msg *allocMsg(); // all Msg objects must be created with this method!!!
 
 typedef std::map <int,CanNet*> netTable;
-netTable::iterator it;
 netTable nettab;
 int netCount;
 

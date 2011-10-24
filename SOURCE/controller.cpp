@@ -26,13 +26,15 @@ int Controller::connect(int bitrate,const char *interface,CanListener *lstn)
 	SocketCanIO *sc=new SocketCanIO(interface);
 	// create cannet
 	// TODO: add it to map and create network ID
-
+        netTable::iterator it;
         netCount++;
         singleton->nettab.insert(std::pair<int,CanNet*>(netCount,new CanNet(sc,lstn)));
-        it=nettab.find(netCount);
-
+        if ((it=nettab.find(netCount))==nettab.end())
+        {
+            return -1;
+        }
 	//  threads start
-        if(singleton->it->second->start()<0)
+        if(it->second->start()<0)
 	{
 		return -1;
 	}
@@ -43,28 +45,42 @@ int Controller::connect(int bitrate,const char *interface,CanListener *lstn)
 
 int    Controller::disconnect(int netid)
 {
-        it=nettab.find(netid);
+        CanNet *cannet;
+        netTable::iterator it;
+        if ((it=nettab.find(netCount))==nettab.end())
+        {
+            return -1;
+        }
 //	//TODO: using map and netid find exact CanNet
-	singleton->it->second->stop();
-	//delete singleton->it->second;
+	it->second->stop();
+        cannet=it->second;
+        nettab.erase(it);
+	delete cannet;
 	return 0;
 }
 
 int    Controller::send(Msg *msg,int netid)
 {
-        it=nettab.find(netid);
+        netTable::iterator it;
+        if ((it=nettab.find(netCount))==nettab.end())
+        {
+            return -1;
+        }
 	//TODO: using map and netid find exact CanNet
-	singleton->it->second->write(msg);
+	it->second->write(msg);
 	return 0;
 }
 
 int    Controller::receive(Msg **msg,int netid)
 {
-        it=nettab.find(netid);
+        netTable::iterator it;
+        if ((it=nettab.find(netCount))==nettab.end())
+        {
+            return -1;
+        }
 	//TODO: using map and netid find exact CanNet
-	singleton->it->second->read(msg);
+	it->second->read(msg);
 	return 0;
-
 }
 
 
