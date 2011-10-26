@@ -1,10 +1,3 @@
-/* 
- * File:   MainWindow.cpp
- * Author: Ira
- * 
- * Created on July 14, 2011, 12:17 AM
- */
-
 #include "MainWindow.h"
 #include "controller.h"
 #include <stdio.h>
@@ -25,33 +18,19 @@ MainWindow :: MainWindow (QWidget *MainWin,
     MainLayout->addWidget(Rec);
     MainLayout->addWidget(Trans);
     MainLayout->addWidget(MessEd);
-//    setFixedSize(840,500);
-     MessEd->setSleep();
+    MessEd->setSleep();
     Trans->setFocusPolicy(Qt::NoFocus);
     Rec->setFocusPolicy(Qt::NoFocus);
 
-//    Controller *Contr_ex;
-//    MessageEditor MesEd_ex(NULL, Contr_ex, Contr_ex->allocMsg());
-//    Transmit Trans_ex(NULL);
     QObject::connect (MessEd,SIGNAL(SendSig(QString, QString, QString,QTime)),
             Trans,SLOT(SendSlot(QString, QString, QString,QTime)));
 
-
-
-//    MainWindow MainWin_ex(NULL,Contr_ex);
-//    Receive Rec_ex(NULL);
     QObject::connect (this,SIGNAL(ReceiveSignal(int,int,QString,QTime)),Rec,SLOT(ReceiveSlot(int,int,QString,QTime)));
 
     QObject::connect(Con,SIGNAL(active()),this,SLOT(connect()));
     QObject::connect(Con,SIGNAL(disactive()),this,SLOT(disconnect()));
 
     setLayout(MainLayout);
-
-    // Menu
-
-//    QMenuBar *menubar=menuBar();
-//    QMenu *menu= new QMenu("Menu");
-//    menubar->addMenu(menu);
 }
 
 int MainWindow :: connect()
@@ -65,8 +44,7 @@ int MainWindow :: disconnect()
 }
 
 int MainWindow :: notify()
-{
-    
+{ 
     unsigned int i;
     QString text;
     char data_element[17];
@@ -84,13 +62,11 @@ int MainWindow :: notify()
     emit ReceiveSignal(msg->getID(),msg->getDlc(),text,time);
     msg->setMsgFree();
     return 0;
-
 }
 
 int MainWindow :: errorInNet(const char* str)
 {
      QMessageBox msgBox;
-//     msgBox.setFixedSize(400,300);
      QString string(str);
      QString info("Warning");
 
@@ -116,62 +92,4 @@ void MainWindow::showCredits()
     lbl->setText(string);
     lbl->setWindowTitle("scanfish info");
     lbl->show();
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

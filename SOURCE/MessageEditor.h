@@ -1,10 +1,3 @@
-/* 
- * File:   MesEdit.h
- * Author: Ira
- *
- * Created on July 2, 2011, 12:59 AM
- */
-
 #ifndef MESEDIT_H
 #define	MESEDIT_H
 
@@ -52,7 +45,6 @@ private slots:
     void EnableCommitButton();
     void ChangeDLC();
     void SendSigSl();
-//    void SendClicked();
 
 private:
 
@@ -87,7 +79,6 @@ private:
 
     Msg *GuiMsgContainer;
     Controller *Contr;
-
 };
 
 #endif	/* MESEDIT_H */

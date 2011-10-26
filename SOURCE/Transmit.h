@@ -1,10 +1,3 @@
-/* 
- * File:   Transmit.h
- * Author: Ira
- *
- * Created on July 11, 2011, 12:21 AM
- */
-
 #ifndef TRANSMIT_H
 #define	TRANSMIT_H
 
@@ -55,7 +48,6 @@ private:
     int k;
     int i;
     int j;
-
 };
 
 #endif	/* TRANSMIT_H */

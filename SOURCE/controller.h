@@ -1,11 +1,14 @@
 #ifndef CONTROLLER_H
 #define	CONTROLLER_H
 
+#include <map>
+#include <algorithm>
 
 #include "canio.h"
 #include "cannet.h"
 #include "msg.h"
 #include "canlistener.h"
+
 
 
 /*
@@ -17,9 +20,9 @@ class Controller
 {
 
 private:
-    CanNet *cannet; // should be replaced with map with several CanNet
     MsgSuperviser msv; // for msg allocation
 	static Controller *singleton; // for Singleton template
+
 private:
     Controller();
 public:
@@ -30,9 +33,12 @@ int    disconnect(int netid);// destroys Net
 int    send(Msg *msg,int netid);      // is used by GUI to send frames
 int    receive(Msg **msg,int netid);   // is used by GUI to receive frames
 Msg *allocMsg(); // all Msg objects must be created with this method!!!
+
+typedef std::map <int,CanNet*> netTable;
+netTable nettab;
+int netCount;
+
 };
-
-
 
 #endif	
 
