@@ -1,10 +1,3 @@
-/* 
- * File:   Receive.cpp
- * Author: Ira
- * 
- * Created on July 12, 2011, 2:17 AM
- */
-
 #include "Receive.h"
 #include <QTime>
 Receive :: Receive(QWidget *Rec) : QGroupBox (Rec)
@@ -12,7 +5,6 @@ Receive :: Receive(QWidget *Rec) : QGroupBox (Rec)
     k=0; //
 
     setTitle("    Receive");
-    //setGeometry(100,100,650,150);
     RecTab = new QTableWidget(0,4);
     RecTab->setColumnWidth(0,130);
     RecTab->setColumnWidth(1,130);
@@ -76,13 +68,11 @@ void Receive :: ReceiveSlot(int ID,int DLC,QString DATA,QTime time)
     RecTab->setRowHeight(0,15);
     QString text;
 
-    //check overflow
     int count=RecTab->rowCount();
     if(count>MAX_TABLE_SIZE)
     {
        RecTab->removeRow(count-1);
     }
-    // Time
     
     text=time.toString("hh:mm:ss.zzz");
 
@@ -90,7 +80,7 @@ void Receive :: ReceiveSlot(int ID,int DLC,QString DATA,QTime time)
     T_Item1->setText(text);
     RecTab->setItem(0,0,T_Item1);
     RecTab->item(0,0)->setTextAlignment(Qt::AlignCenter);
-    // Time
+
     text = QVariant(ID).toString();
     QTableWidgetItem *T_Item2 = new QTableWidgetItem;
     T_Item2->setText(text);
@@ -106,7 +96,7 @@ void Receive :: ReceiveSlot(int ID,int DLC,QString DATA,QTime time)
 
     QTableWidgetItem *T_Item4 = new QTableWidgetItem
             (QString::fromLocal8Bit(""));
-    //text = "01  02  03  04  05  06  07  08";
+
     T_Item4->setText(DATA);
     RecTab->setItem(0,3,T_Item4);
     RecTab->item(0,3)->setTextAlignment(Qt::AlignCenter);
@@ -163,10 +153,7 @@ void Receive :: RecTableSave()
                 stream<<"\n";
                 i=0;
                 j++;
-            }
-//            text = RecTab->item(0,0)->text();
-//            stream<<text;
-            
+            }        
             file.close();
         }
     }

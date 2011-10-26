@@ -1,19 +1,10 @@
-/* 
- * File:   Transmit.cpp
- * Author: Ira
- * 
- * Created on July 11, 2011, 12:21 AM
- */
-
 #include "Transmit.h"
 #include <QTime>
 Transmit :: Transmit(QWidget *Trans) : QGroupBox (Trans)
 {
 
     setTitle("    Transmit");
-  //  setGeometry(100,100,650,150);
-
-    k=0; //kol strok tablici
+    k=0;
 
     TransTab = new QTableWidget(0,4);
     TransTab->setColumnWidth(0,130);
@@ -58,7 +49,6 @@ Transmit :: Transmit(QWidget *Trans) : QGroupBox (Trans)
 
    connect (TransClearButton,SIGNAL(clicked()),this,SLOT(TransTableClear()));
    connect (TransSaveButton,SIGNAL(clicked()),this,SLOT(TransTableSave()));
-
 }
 
 void Transmit :: TransTableClear()
@@ -78,13 +68,12 @@ void Transmit :: SendSlot (QString ID, QString DLC, QString DATA,QTime time)
 
     TransTab->insertRow(0);
     TransTab->setRowHeight(0,15);
-    //check overflow
+
     int count=TransTab->rowCount();
     if(count>MAX_TABLE_SIZE)
     {
        TransTab->removeRow(count-1);
     }
-    // Time
 
     QString text;
     text=time.toString("hh:mm:ss.zzz");
@@ -93,8 +82,7 @@ void Transmit :: SendSlot (QString ID, QString DLC, QString DATA,QTime time)
     T_Item1->setText(text);
     TransTab->setItem(0,0,T_Item1);
     TransTab->item(0,0)->setTextAlignment(Qt::AlignCenter);
-    // Time
-    //QString text;
+
     QTableWidgetItem *T_Item2 = new QTableWidgetItem;
     T_Item2->setText(ID);
     TransTab->setItem(0,1,T_Item2);
@@ -108,11 +96,9 @@ void Transmit :: SendSlot (QString ID, QString DLC, QString DATA,QTime time)
 
     QTableWidgetItem *T_Item4 = new QTableWidgetItem
             (QString::fromLocal8Bit(""));
-    //text = "01  02  03  04  05  06  07  08";
     T_Item4->setText(DATA);
     TransTab->setItem(0,3,T_Item4);
     TransTab->item(0,3)->setTextAlignment(Qt::AlignCenter);
-
 }
 
 void Transmit :: TransTableSave()

@@ -1,10 +1,3 @@
-/* 
- * File:   MainWindow.h
- * Author: Ira
- *
- * Created on July 14, 2011, 12:17 AM
- */
-
 #ifndef MAINWINDOW_H
 #define	MAINWINDOW_H
 
@@ -31,9 +24,7 @@ class MainWindow : public QWidget, public CanListener
 
 public:
     MainWindow (QWidget *MainWin, Controller *mContr);
-//
-//    int connect(const char *str);
-//    int disconnect();
+
     int notify();
     int errorInNet(const char *str);
 
@@ -52,9 +43,6 @@ private:
     Receive *Rec;
     Connection *Con;
     Controller *Contr;
-
-
-
 };
 
 #endif	/* MAINWINDOW_H */

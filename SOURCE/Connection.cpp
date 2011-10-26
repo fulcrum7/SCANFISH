@@ -1,16 +1,10 @@
-/* 
- * File:   Connection.cpp
- * Author: Ira
- * 
- * Created on July 12, 2011, 2:29 AM
- */
-
-
 #include "Connection.h"
 #include "controller.h"
 
 Connection::Connection(QWidget *Con,CanListener *mcanl) : QWidget (Con)
 {
+   nid=0;
+   
    canl=mcanl;
    can0 = new QLineEdit;
    can0->setPlaceholderText("Interface");
@@ -46,7 +40,6 @@ Connection::Connection(QWidget *Con,CanListener *mcanl) : QWidget (Con)
    connect (DisconnectButton,SIGNAL(clicked()),this,SLOT(DisconnectClicked()));
    connect (can0,SIGNAL(textChanged(const QString &)),this,
            SLOT(EnableConnectButton()));
-   
 }
 
 void Connection :: ConnectClicked()
@@ -60,10 +53,7 @@ void Connection :: ConnectClicked()
         can0->setEnabled(false);
         OnOff->setText("ON");
         emit active();
-    }
-
-
-    
+    } 
 }
 
 void Connection :: DisconnectClicked()
@@ -72,7 +62,8 @@ void Connection :: DisconnectClicked()
     ConnectButton->setEnabled(true);
     can0->setEnabled(true);
     OnOff->setText("OFF");
-    Controller::getController()->disconnect(15);
+    nid++;
+    Controller::getController()->disconnect(nid);
     emit disactive();
 }
 
@@ -82,7 +73,6 @@ void Connection :: EnableConnectButton()
         ConnectButton->setEnabled(false);
     else
         ConnectButton->setEnabled(true);
-
 }
 
 
