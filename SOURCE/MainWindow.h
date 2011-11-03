@@ -27,6 +27,9 @@ public:
 
     int notify();
     int errorInNet(const char *str);
+    int getnum();
+    void setContrNum();
+    int num;
 
     signals:
     void ReceiveSignal(int ID,int DLC,QString DATA,QTime time);
@@ -35,6 +38,7 @@ public slots:
     int connect();
     int disconnect();
     void showCredits();
+    void setCurrentNum();
 
 
 private:

@@ -37,6 +37,7 @@ Msg *allocMsg(); // all Msg objects must be created with this method!!!
 typedef std::map <int,CanNet*> netTable;
 netTable nettab;
 int netCount;
+int contrNum;
 
 };
 

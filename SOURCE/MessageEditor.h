@@ -38,6 +38,7 @@ public:
     void DLC_TextChanged (int k);
     void SendClicked();
     void SendSig(QString ID,QString DLC,QString DATA,QTime time);
+    void changeNum();
 
 
 private slots:
