@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
+
 MainWindow :: MainWindow (QWidget *MainWin, 
         Controller *mContr) : QWidget (MainWin),CanListener()
 {
@@ -30,12 +31,18 @@ MainWindow :: MainWindow (QWidget *MainWin,
     QObject::connect(Con,SIGNAL(active()),this,SLOT(connect()));
     QObject::connect(Con,SIGNAL(disactive()),this,SLOT(disconnect()));
 
+    QObject::connect(MessEd,SIGNAL(changeNum()),this,SLOT(setCurrentNum()));
+    QObject::connect(Con,SIGNAL(changeNum()),this,SLOT(setCurrentNum()));
+
     setLayout(MainLayout);
 }
 
 int MainWindow :: connect()
 {
      MessEd->wakeUp();
+     std::map <int,CanNet*>::iterator it;
+     it=Contr->nettab.find(Contr->netCount);
+     num=it->first;
 }
 
 int MainWindow :: disconnect()
@@ -44,12 +51,12 @@ int MainWindow :: disconnect()
 }
 
 int MainWindow :: notify()
-{ 
+{
     unsigned int i;
     QString text;
     char data_element[17];
     Msg *msg;
-    Contr->receive(&msg,1);
+    Contr->receive(&msg,num);
     for (i=0;i<msg->getDlc();i++)
     {
         sprintf(data_element,"%02X",msg->getData(i));
@@ -92,4 +99,14 @@ void MainWindow::showCredits()
     lbl->setText(string);
     lbl->setWindowTitle("scanfish info");
     lbl->show();
+}
+
+int MainWindow::getnum()
+{
+    return num;
+}
+
+void MainWindow::setCurrentNum()
+{
+    Contr->contrNum=num;
 }

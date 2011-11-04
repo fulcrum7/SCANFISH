@@ -25,6 +25,7 @@ public:
     signals:
     void active();
     void disactive();
+    void changeNum();
 private slots:
     void ConnectClicked();
     void DisconnectClicked();
@@ -41,7 +42,6 @@ private:
     CanListener *canl;
     QByteArray strInt;
     int push;
-    int nid;
 };
 
 #endif	/* CONNECTION_H */

@@ -27,9 +27,7 @@ int main(int argc, char *argv[])
    Controller *Con;
    Con=Controller::getController();
 
-   
    MainWindow *MainWin=new MainWindow(NULL,Con);
-
    QMainWindow mw(0);
    mw.setWindowTitle("scanfish");
    mw.setCentralWidget(MainWin);
@@ -38,7 +36,6 @@ int main(int argc, char *argv[])
    menu->addAction("About",MainWin,SLOT(showCredits()));
    menu->addAction("Quit",&app,SLOT(quit()));
    mbar->addMenu(menu);
-
    mw.show();
 
    return app.exec();

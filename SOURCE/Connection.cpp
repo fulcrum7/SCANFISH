@@ -3,8 +3,6 @@
 
 Connection::Connection(QWidget *Con,CanListener *mcanl) : QWidget (Con)
 {
-   nid=0;
-   
    canl=mcanl;
    can0 = new QLineEdit;
    can0->setPlaceholderText("Interface");
@@ -58,12 +56,13 @@ void Connection :: ConnectClicked()
 
 void Connection :: DisconnectClicked()
 {
+    emit changeNum();
     DisconnectButton->setEnabled(false);
     ConnectButton->setEnabled(true);
     can0->setEnabled(true);
     OnOff->setText("OFF");
-    nid++;
-    Controller::getController()->disconnect(nid);
+    
+    Controller::getController()->disconnect(Controller::getController()->contrNum);
     emit disactive();
 }
 
